@@ -74,6 +74,18 @@ class InventoryRetrieveUpdateDestroyView(APIView):
     def get_queryset(self, **kwargs):
         return self.queryset.get(**kwargs)
 
+# Normally I'd just add the filter as a query param to the InventoryListCreateView,
+# but the requirement was to specifically "Create a view".
+# In a real project I'd probably push to use the existing view.
+
+class InventoryListAfterDateView(APIView):
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
+
+    def get(self, request: Request, *args, **kwargs) -> Response:
+        self.queryset = self.queryset.filter(created_at__gte=kwargs["date"])
+        serializer = self.serializer_class(self.queryset, many=True)
+        return Response(serializer.data, status=200)
 
 class InventoryTagListCreateView(APIView):
     queryset = InventoryTag.objects.all()
