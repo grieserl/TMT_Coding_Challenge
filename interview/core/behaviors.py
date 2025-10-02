@@ -30,13 +30,23 @@ class IsActiveModel(models.Model):
     class Meta:
         abstract = True
 
+    # I'm pretty sure this is a bug, assuming that we want activate to set is_active to True and deactivate to False
+
+    # @classmethod
+    # def activate(cls, pk: int):
+    #     cls.objects.filter(pk=pk).update(is_active=False)
+    #
+    # @classmethod
+    # def deactivate(cls, pk: int):
+    #     cls.objects.filter(pk=pk).update(is_active=True)
+
     @classmethod
     def activate(cls, pk: int):
-        cls.objects.filter(pk=pk).update(is_active=False)
+        cls.objects.filter(pk=pk).update(is_active=True)
 
     @classmethod
     def deactivate(cls, pk: int):
-        cls.objects.filter(pk=pk).update(is_active=True)
+        cls.objects.filter(pk=pk).update(is_active=False)
 
 
 class NameModel(models.Model):
