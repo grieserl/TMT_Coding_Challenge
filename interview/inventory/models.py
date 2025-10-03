@@ -37,7 +37,7 @@ class Inventory(NameModel, TimestampedModel, models.Model):
         InventoryLanguage, on_delete=models.CASCADE, related_name="inventories"
     )
     tags = models.ManyToManyField(InventoryTag, related_name="inventories")
-    metadata = models.JSONField()
+    metadata = models.JSONField(default=dict, blank=True)
 
     class Meta:
         verbose_name_plural = "Inventories"
